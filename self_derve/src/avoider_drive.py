@@ -10,8 +10,8 @@ class SelfDrive:
 
     def lds_callback(self, scan):
         # scan 분석 후 속도 결정
-        print(f'scan[30]:{scan.ranges[30]:.3f}')
-        print(f'scan[-30]:{scan.ranges[-30]:.3f}')		
+        print(f'scan[30]:{scan.ranges[45]:.3f}')
+        print(f'scan[-30]:{scan.ranges[-45]:.3f}')		
         turtle_vel = Twist()
          # 전진 속도 및 회전 속도 지정
         if scan.ranges[0] > 0.25 or scan.ranges[0] == 0.0:
@@ -28,6 +28,12 @@ class SelfDrive:
                     turtle_vel.angular.z = 2
                 else:
                     turtle_vel.angular.z = -2
+        if scan.ranges[30] < 0.25 and scan.ranges[30] != 0:
+            turtle_vel.linear.x = 0
+            turtle_vel.angular.z = -1
+        if scan.ranges[-30] < 0.25 and scan.ranges[-30] != 0:
+            turtle_vel.linear.x = 0
+            turtle_vel.angular.z = 1
         
 
          # 속도 출력
